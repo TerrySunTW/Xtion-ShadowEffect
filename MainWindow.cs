@@ -140,33 +140,36 @@ namespace ShadowEffect
 
 			lock (this)
 			{
-                //建一個queue，只畫前幾個畫面
-                ImgCounter++;
-                if (App.Default.IsBlackShadow)
-                {
-                    this.bitmap.Invert();
-                }
+                if (this.bitmap !=null)
+                { 
+                    //建一個queue，只畫前幾個畫面
+                    ImgCounter++;
+                    if (App.Default.IsBlackShadow)
+                    {
+                        this.bitmap.Invert();
+                    }
                 
                 
 
-                if (ImgCounter > saveLimit)
-                {
-                    ImgCounter = 0;
-                    //去背後存入Queue
-                    if (App.Default.IsReverse)
+                    if (ImgCounter > saveLimit)
                     {
-                        this.bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                    }
+                        ImgCounter = 0;
+                        //去背後存入Queue
+                        if (App.Default.IsReverse)
+                        {
+                            this.bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                        }
                     
-                    ImgQueue.Enqueue(new Bitmap(this.bitmap));
+                        ImgQueue.Enqueue(new Bitmap(this.bitmap));
+                    }
+                    //LastImg=合成所有Queue的照片，
+                    //把所有Queue的圖合成一張，去背、
+                    e.Graphics.DrawImage(MergingAllImage(),
+                    this.panelView.Location.X,
+                    this.panelView.Location.Y,
+                    this.panelView.Size.Width,
+                    this.panelView.Size.Height);
                 }
-                //LastImg=合成所有Queue的照片，
-                //把所有Queue的圖合成一張，去背、
-                e.Graphics.DrawImage(MergingAllImage(),
-                this.panelView.Location.X,
-                this.panelView.Location.Y,
-                this.panelView.Size.Width,
-                this.panelView.Size.Height);
                 
             }
 		}
