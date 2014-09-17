@@ -176,8 +176,14 @@ namespace ShadowEffect
             Bitmap LastBitmap = new Bitmap(this.bitmap.Width, this.bitmap.Height);
             using (Graphics grp = Graphics.FromImage(LastBitmap))
              {
+                 var DefaultBackgroundBrushes = Brushes.Black;
+                 if (App.Default.IsBlackShadow)
+                 {
+                     DefaultBackgroundBrushes = Brushes.White;
+                 }
+
                  grp.FillRectangle(
-                     Brushes.White, 0, 0, this.bitmap.Width, this.bitmap.Height);
+                     DefaultBackgroundBrushes, 0, 0, this.bitmap.Width, this.bitmap.Height);
              }
             Rectangle _Rectangle = new Rectangle(0, 0, LastBitmap.Width, LastBitmap.Height);
             Queue TempQueue = new Queue();
@@ -190,7 +196,15 @@ namespace ShadowEffect
                 {
                     
                     Bitmap tmpImg=(Bitmap)ImgQueue.Dequeue();
-                    tmpImg.MakeTransparent(Color.White);
+                    if (App.Default.IsBlackShadow)
+                    {
+                        tmpImg.MakeTransparent(Color.White);
+                    }
+                    else
+                    {
+                        tmpImg.MakeTransparent(Color.Black);
+                    }
+                    
                     tmpImg.GaussianBlur(ref _Rectangle,App.Default.ShadowBlurRadio);
                     
                     if (ImgQueue.Count < ImgQueueLitmitation)
