@@ -94,5 +94,29 @@ namespace ShadowEffect {
                 this["IsBlackShadow"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1280")]
+        public int AppScreenHeight {
+            get {
+                return ((int)(this["AppScreenHeight"]));
+            }
+            set {
+                this["AppScreenHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("780")]
+        public int AppScreenWidth {
+            get {
+                return ((int)(this["AppScreenWidth"]));
+            }
+            set {
+                this["AppScreenWidth"] = value;
+            }
+        }
     }
 }

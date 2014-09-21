@@ -44,9 +44,13 @@ namespace ShadowEffect
 		{
 			InitializeComponent();
             //full screen
+            
             this.Left = this.Top = 0;
+            this.panelView.Size = new Size(App.Default.AppScreenWidth, App.Default.AppScreenHeight);
+
             this.Width = Screen.PrimaryScreen.WorkingArea.Width;
             this.Height = Screen.PrimaryScreen.WorkingArea.Height;
+           
             formState.Maximize(this);
             this.TopMost = true;
             this.Bounds = Screen.PrimaryScreen.Bounds;
@@ -54,8 +58,10 @@ namespace ShadowEffect
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
             Taskbar.Hide();
-            
+           
 			this.context = Context.CreateFromXmlFile(SAMPLE_XML_FILE, out scriptNode);
+            
+            //this.context.
 			this.depth = context.FindExistingNode(NodeType.Depth) as DepthGenerator;
 			if (this.depth == null)
 			{
@@ -80,8 +86,8 @@ namespace ShadowEffect
 			this.histogram = new int[this.depth.DeviceMaxDepth];
 
 			MapOutputMode mapMode = this.depth.MapOutputMode;
-
-			this.bitmap = new Bitmap((int)mapMode.XRes, (int)mapMode.YRes/*, System.Drawing.Imaging.PixelFormat.Format24bppRgb*/);
+            
+			this.bitmap = new Bitmap((int)mapMode.XRes, (int)mapMode.YRes);
 			this.shouldRun = true;
 			this.readerThread = new Thread(ReaderThread);
 			this.readerThread.Start();
@@ -353,11 +359,21 @@ namespace ShadowEffect
 		}
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
-            if (e.KeyChar.ToString().ToUpper() == Keys.Q.ToString())
+            switch (e.KeyChar.ToString().ToUpper())
             {
-                Taskbar.Show();
-                Close();
+                case "Q":
+                    Taskbar.Show();
+                    Close();
+                    break;
+                case "C":
+                    ImgQueue.Clear();
+                    break;
             }
+            //if (e.KeyChar.ToString().ToUpper() == Keys.Q.ToString())
+            //{
+            //   Taskbar.Show();
+            //        Close();
+            //}
             base.OnKeyPress(e);
         }
 		private readonly string SAMPLE_XML_FILE = @"SamplesConfig.xml";

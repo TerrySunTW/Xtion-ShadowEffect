@@ -20,5 +20,11 @@
     <Setting Name="IsBlackShadow" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="AppScreenHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1280</Value>
+    </Setting>
+    <Setting Name="AppScreenWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">780</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
